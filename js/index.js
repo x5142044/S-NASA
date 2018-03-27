@@ -1,13 +1,13 @@
 var Flickr = {};
 
 // Fetch the Data as JSON
-Flickr.GetData = function (user_id) {
+Flickr.GetData = function (per_page) {
     var api_key = "a5e95177da353f58113fd60296e1d250",
-        per_page = 40;
+        user_id = "24662369@N07";
     var flickr_url =
         "https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=" + api_key + "&user_id=" + user_id + "&per_page=" + per_page + "&format=json&nojsoncallback=1";
-
     var xhr = new XMLHttpRequest();
+
     xhr.open("GET", flickr_url);
     xhr.send();
     xhr.addEventListener('load', function (e) {
@@ -15,7 +15,6 @@ Flickr.GetData = function (user_id) {
         Flickr.pushToDOM(data);
     });
 }
-
 
 Flickr.pushToDOM = function (input) {
     var data = JSON.parse(input);
@@ -32,15 +31,11 @@ Flickr.pushToDOM = function (input) {
 
     var results = document.querySelector("#NASA_photo");
     output.forEach(function (item) {
-//    var image = document.createElement('img');
-//    image.src = "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" + item.id + "_" + item.secret + ".jpg";
-//    results.appendChild(image);
-////        
-    var div = document.createElement('div');
-        div.className="Nasa_div";
-//    div.textContent="<div> hello world </div>";
-        
-    var htmlImage = "<a target='_blank' href=''>";
+
+        var div = document.createElement('div');
+        div.className = "Nasa_div";
+
+        var htmlImage = "<a target='_blank' href='https://www.flickr.com/photos/24662369@N07/'>";
         htmlImage += "<img src='https://farm";
         htmlImage += item.farm;
         htmlImage += ".staticflickr.com/";
@@ -52,46 +47,45 @@ Flickr.pushToDOM = function (input) {
         htmlImage += ".jpg' ></a><div> ";
         htmlImage += item.title;
         htmlImage += "</div>";
-    
-    
-        div.innerHTML = htmlImage;
-            results.appendChild(div);
 
-       
-//
-//        
-        
-        
-        });
+        div.innerHTML = htmlImage;
+        results.appendChild(div);
+    });
     
-    
-        
-        //        document.getElementById("#NASA_photo").innerHTML = image;
-//        document.getElementById("#NASA_photo").appendChild(div);
-   
+
 };
 
+Flickr.GetData(10);
 
-Flickr.GetData("24662369@N07");
+//load more photos
+function addTenItems() {
+    var loadMore = 0;
+    loadMore += 10;
+    Flickr.GetData(10 + loadMore);
+};
 
-function imageFilter(){
-    var input, filter, filtedDiv, innerDiv, outerDiv;
+//search filter
+function imageFilter() {
+    var input, filter, filtedDiv, innerDiv;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
-    outerDiv = document.getElementById("NASA_photo");
     filtedDiv = document.getElementsByClassName("Nasa_div");
-    
-    for(i=0;i<filtedDiv.length;i++){
+
+
+    for (i = 0; i < filtedDiv.length; i++) {
         innerDiv = filtedDiv[i].getElementsByTagName("div")[0];
-        if(innerDiv.innerHTML.toUpperCase().indexOf(filter)>-1){
+        if (innerDiv.innerHTML.toUpperCase().indexOf(filter) > -1) {
             filtedDiv[i].style.display = "";
+        } else {
+            filtedDiv[i].style.display = "none";
         }
-        else{
-             filtedDiv[i].style.display = "none";
-        }
-        
     }
-    
-    
-    
 }
+
+//sort reverse
+function sortDivs(){
+    var elem = document.getElementById("NASA_photo");
+        for (var i=0;i<elem.childNodes.length;i++) 
+            elem.insertBefore(elem.childNodes[i], elem.firstChild);
+}
+

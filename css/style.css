@@ -1,4 +1,44 @@
 .Nasa_div {
-	padding: 30px;
-/*    text-align: center;*/
+    /*	padding: 30px;*/
+    /*    text-align: center;*/
+}
+
+.Nasa_div {
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Nasa_div:nth-child(n) {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+img {
+    max-width: 600px;
+    height: auto;
+}
+
+body {
+    margin-top: 56px;
+}
+
+.footer {
+    font-size: 12px;
+    padding: 10px;
+    background-color: #efefef;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.loadMore {
+    margin: 20px;
+    text-align: center;
 }
